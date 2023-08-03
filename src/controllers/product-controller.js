@@ -60,7 +60,21 @@ exports.post = (req, res, next) => {
 };
 
 exports.put = (req, res, next) => {
-  res.status(201).send({title: 'PUT'});
+  Product.findByIdAndUpdate(req.params.id, {
+    $set: {
+      title: req.body.title,
+      description: req.body.description,
+      price: req.body.price,
+    },
+  })
+    .then((r) => {
+      res.status(201).send({message: 'Produto atualizado com sucesso'});
+    })
+    .catch((e) => {
+      res
+        .status(400)
+        .send({message: 'Erro ao atualizar produto', data: e.message});
+    });
 };
 
 exports.delete = (req, res, next) => {
