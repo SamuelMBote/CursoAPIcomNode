@@ -23,6 +23,17 @@ exports.getBySlug = (req, res, next) => {
         .send({message: 'Falha ao cadastrar produto', data: e.message});
     });
 };
+exports.getById = (req, res, next) => {
+  Product.findById(req.params.id)
+    .then((e) => {
+      res.status(201).send(e);
+    })
+    .catch((e) => {
+      res
+        .status(400)
+        .send({message: 'Falha ao cadastrar produto', data: e.message});
+    });
+};
 exports.post = (req, res, next) => {
   var product = new Product(req.body);
   product
