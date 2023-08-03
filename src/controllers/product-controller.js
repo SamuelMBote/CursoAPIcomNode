@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 exports.get = (req, res, next) => {
   Product.find({active: true}, 'title price slug')
-    .then((e) => {
-      res.status(201).send(e);
+    .then((r) => {
+      res.status(201).send(r);
     })
     .catch((e) => {
       res
@@ -14,8 +14,8 @@ exports.get = (req, res, next) => {
 };
 exports.getBySlug = (req, res, next) => {
   Product.findOne({slug: req.params.slug, active: true}, 'title price slug')
-    .then((e) => {
-      res.status(201).send(e);
+    .then((r) => {
+      res.status(201).send(r);
     })
     .catch((e) => {
       res
@@ -25,13 +25,24 @@ exports.getBySlug = (req, res, next) => {
 };
 exports.getById = (req, res, next) => {
   Product.findById(req.params.id)
-    .then((e) => {
-      res.status(201).send(e);
+    .then((r) => {
+      res.status(201).send(r);
     })
     .catch((e) => {
       res
         .status(400)
         .send({message: 'Falha ao cadastrar produto', data: e.message});
+    });
+};
+exports.getByTag = (req, res, next) => {
+  Product.find({tags: req.params.tag, active: true})
+    .then((r) => {
+      res.status(201).send(r);
+    })
+    .catch((e) => {
+      res
+        .status(400)
+        .send({message: 'Falha ao buscar produto pela tag', data: e.message});
     });
 };
 exports.post = (req, res, next) => {
