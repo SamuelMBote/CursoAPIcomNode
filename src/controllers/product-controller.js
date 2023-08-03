@@ -78,5 +78,13 @@ exports.put = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  res.status(201).send({title: 'DELETE'});
+  Product.findByIdAndRemove(req.params.id)
+    .then((r) => {
+      res.status(201).send({message: 'Produto deletado com sucesso'});
+    })
+    .catch((e) => {
+      res
+        .status(400)
+        .send({message: 'Erro ao deletar produto', data: e.message});
+    });
 };
