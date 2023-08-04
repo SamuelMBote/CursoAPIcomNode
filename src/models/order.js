@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-  number: {type: Number, required: true, trim: true},
+  number: {type: String, required: true, trim: true},
   createDate: {type: Date, required: true, default: Date.now},
   status: {
     type: String,
@@ -14,12 +14,17 @@ const schema = new Schema({
   customer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Customer',
+    required: true,
   },
   items: [
     {
       quantity: {type: Number, required: true, default: 1},
       price: {type: Number, required: true},
-      product: {type: mongoose.Schema.Types.ObjectId, ref: 'Product'},
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true,
+      },
     },
   ],
 });

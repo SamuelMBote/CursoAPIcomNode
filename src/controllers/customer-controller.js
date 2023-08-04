@@ -1,6 +1,7 @@
 'use strict';
+
 const ValidationContract = require('../validators/fluent-validator');
-const repository = require('../repositories/product-repository');
+const repository = require('../repositories/customer-repository');
 
 exports.get = async (req, res, next) => {
   try {
@@ -9,23 +10,18 @@ exports.get = async (req, res, next) => {
   } catch (error) {
     res
       .status(400)
-      .send({
-        message: 'Falha ao buscar lista de produtos',
-        error: error.message,
-      });
+      .send({message: 'Falha ao buscar clientes', error: error.message});
   }
 };
-exports.getBySlug = async (req, res, next) => {
+exports.getByEmail = async (req, res, next) => {
   try {
-    let data = await repository.getBySlug(req.params.slug);
+    let data = await repository.getByEmail(req.params.email);
     res.status(201).send(data);
   } catch (error) {
-    res
-      .status(400)
-      .send({
-        message: 'Falha ao buscar produto pelo slug',
-        error: error.message,
-      });
+    res.status(400).send({
+      message: 'Falha ao buscar cliente por email',
+      error: error.message,
+    });
   }
 };
 exports.getById = async (req, res, next) => {
@@ -35,23 +31,12 @@ exports.getById = async (req, res, next) => {
   } catch (error) {
     res
       .status(400)
-      .send({message: 'Falha ao buscar produto pelo id', error: error.message});
+      .send({message: 'Falha ao buscar cliente', error: error.message});
   }
 };
-exports.getByTag = async (req, res, next) => {
-  try {
-    let data = await repository.getByTag(req.params.tag);
-    res.status(201).send(data);
-  } catch (error) {
-    res.status(400).send({
-      message: 'Falha ao buscar produto pela tag',
-      error: error.message,
-    });
-  }
-};
+
 exports.post = async (req, res, next) => {
   let contract = new ValidationContract();
-  contract.hasMinLen;
 
   if (!contract.isValid()) {
     res.status(400).send(contract.errors()).end();
@@ -59,30 +44,29 @@ exports.post = async (req, res, next) => {
   }
   try {
     let data = await repository.post(req.body);
-    console.log(data);
-    res.status(201).send({message: 'Produto cadastrado com sucesso!', data});
+    res.status(201).send({message: 'Cliente cadastrado com sucesso!', data});
   } catch (error) {
     res
       .status(400)
-      .send({message: 'Falha ao cadastrar produto', error: error.message});
+      .send({message: 'Falha ao cadastrar cliente', error: error.message});
   }
 };
 
 exports.put = async (req, res, next) => {
   try {
     let data = await repository.put(req.params.id, req.body);
-    res.status(201).send({message: 'Produto atualizado com sucesso', data});
+    res.status(201).send({message: 'Cliente atualizado com sucesso', data});
   } catch (error) {
     res
       .status(400)
-      .send({message: 'Erro ao atualizar produto', error: error.message});
+      .send({message: 'Erro ao atualizar cliente', error: error.message});
   }
 };
 
 exports.delete = async (req, res, next) => {
   try {
     let data = await repository.delete(req.params.id);
-    res.status(201).send({message: 'Produto deletado com sucesso'});
+    res.status(201).send({message: 'Produto deletado com sucesso', data});
   } catch (error) {
     res
       .status(400)

@@ -1,6 +1,6 @@
 'use strict';
 const ValidationContract = require('../validators/fluent-validator');
-const repository = require('../repositories/product-repository');
+const repository = require('../repositories/order-repository');
 
 exports.get = async (req, res, next) => {
   try {
@@ -9,49 +9,22 @@ exports.get = async (req, res, next) => {
   } catch (error) {
     res
       .status(400)
-      .send({
-        message: 'Falha ao buscar lista de produtos',
-        error: error.message,
-      });
+      .send({message: 'Falha ao cadastrar produto', error: error.message});
   }
 };
-exports.getBySlug = async (req, res, next) => {
+exports.getByNumber = async (req, res, next) => {
   try {
-    let data = await repository.getBySlug(req.params.slug);
+    let data = await repository.getByNumber(req.params.slug);
     res.status(201).send(data);
   } catch (error) {
     res
       .status(400)
-      .send({
-        message: 'Falha ao buscar produto pelo slug',
-        error: error.message,
-      });
+      .send({message: 'Falha ao cadastrar produto', error: error.message});
   }
 };
-exports.getById = async (req, res, next) => {
-  try {
-    let data = await repository.getById(req.params.id);
-    res.status(201).send(data);
-  } catch (error) {
-    res
-      .status(400)
-      .send({message: 'Falha ao buscar produto pelo id', error: error.message});
-  }
-};
-exports.getByTag = async (req, res, next) => {
-  try {
-    let data = await repository.getByTag(req.params.tag);
-    res.status(201).send(data);
-  } catch (error) {
-    res.status(400).send({
-      message: 'Falha ao buscar produto pela tag',
-      error: error.message,
-    });
-  }
-};
+
 exports.post = async (req, res, next) => {
   let contract = new ValidationContract();
-  contract.hasMinLen;
 
   if (!contract.isValid()) {
     res.status(400).send(contract.errors()).end();
@@ -59,12 +32,12 @@ exports.post = async (req, res, next) => {
   }
   try {
     let data = await repository.post(req.body);
-    console.log(data);
-    res.status(201).send({message: 'Produto cadastrado com sucesso!', data});
+
+    res.status(201).send({message: 'Pedido cadastrado com sucesso!', data});
   } catch (error) {
     res
       .status(400)
-      .send({message: 'Falha ao cadastrar produto', error: error.message});
+      .send({message: 'Falha ao cadastrar pedido', error: error.message});
   }
 };
 
