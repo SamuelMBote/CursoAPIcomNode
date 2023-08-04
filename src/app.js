@@ -10,6 +10,8 @@ const router = express.Router();
 mongoose.connect('mongodb://localhost:27017/cursonode');
 //Carrega os models
 const Product = require('./models/product');
+const Customer = require('./models/customer');
+const Order = require('./models/order');
 //Carrega rotas
 const indexRoute = require('./routes/index');
 const productRoute = require('./routes/products');

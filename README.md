@@ -53,7 +53,7 @@ Repositório do curso: https://github.com/balta-io/1972
 
 ## Stack
 
-**Back-end:** Web API com NodeJS
+**Back-end:** Web API com NodeJS e MongoDb
 
 
 ## Referencias
@@ -61,6 +61,8 @@ Repositório do curso: https://github.com/balta-io/1972
  - [Balta.io](https://github.com/balta-io)    
  - [NodeJS](https://nodejs.org/es)
  - [ExpressJS](https://expressjs.com/pt-br/)
+ - [Mongoose](https://mongoosejs.com/)
+ - [MongoDB](https://www.mongodb.com/pt-br)
  - [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
  
  
